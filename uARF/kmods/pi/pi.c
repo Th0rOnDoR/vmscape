@@ -136,7 +136,7 @@ static long uarf_pi_ioctl(struct file *file, unsigned int cmd, unsigned long arg
     case UARF_IOCTL_OUT: {
         pr_debug("Type OUT\n");
         struct UarfPiReqOut req;
-        if (copy_from_user(&req, ( __user *) arg, sizeof(req))) {
+        if (copy_from_user(&req, (struct UarfPiReqOut __user *) arg, sizeof(req))) {
             pr_warn("Failed to copy data from user\n");
             return -EINVAL;
         }
