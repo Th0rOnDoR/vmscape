@@ -22,22 +22,31 @@ function run-nspawn() {
         --bind /dev/fuse \
         --bind /dev/loop-control \
         --chdir /workspace/vmscape \
-        -E "http_proxy=$http_proxy" \
-        -E "https_proxy=$https_proxy" \
         "$@"
+        #-E "http_proxy=$http_proxy" \
+        #-E "https_proxy=$https_proxy" \
 }
 
 # prepare the actual container
 
 if ! [ -d "$CONTAINER_DIR" ]; then
     # install container dependencies
-    sudo apt install debootstrap systemd-container
+    # sudo pacman -Syu debootstrap
 
     # bootstrap the ubuntu with packages needed for building the virtual machine
     sudo debootstrap \
         --arch amd64 \
         --variant minbase \
         questing "$CONTAINER_DIR" http://archive.ubuntu.com/ubuntu/
+    run-nspawn -- apt update
+    run-nspawn -- apt install -y \
+        passwd \
+        login \
+        adduser \
+        libpam-modules \
+        file
+        #tzdata \
+
 
     # qemu with the right version 
     run-nspawn -- apt install -y \

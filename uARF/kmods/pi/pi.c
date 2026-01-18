@@ -136,12 +136,13 @@ static long uarf_pi_ioctl(struct file *file, unsigned int cmd, unsigned long arg
     case UARF_IOCTL_OUT: {
         pr_debug("Type OUT\n");
         struct UarfPiReqOut req;
-        if (copy_from_user(&req, (uint64_t __user *) arg, sizeof(req))) {
+        if (copy_from_user(&req, ( __user *) arg, sizeof(req))) {
             pr_warn("Failed to copy data from user\n");
             return -EINVAL;
         }
-
-        asm volatile("outl %0, %1" ::"a"(req.value), "Nd"(req.port));
+        asm volatile("outl %0, %w1"
+                     :
+                     : "a"((u32)req.value), "Nd"(req.port));
 
         break;
     }
