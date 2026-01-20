@@ -8,6 +8,7 @@ ATTACK_DIR="$SCRIPT_DIR/../attack"
 KERNEL_FILE="$SCRIPT_DIR/bzImage"
 INITRD_MANUAL_FILE="$SCRIPT_DIR/initramfs-base.cpio.gz"
 INITRD_EVAL_FILE="$SCRIPT_DIR/initramfs-eval.cpio.gz"
+INITRD_FILE_CUSTOM="$SCRIPT_DIR/initramfs.cpio.gz"
 SECRET_FILE="$SCRIPT_DIR/secret.txt"
 DEFAULT_SECRET_SIZE=4096
 
@@ -106,8 +107,9 @@ taskset -c "$core" qemu-system-x86_64 \
     -nographic \
     -object "secret,id=$QCOW_SECRET_NAME,file=$SECRET_FILE" \
     -drive "file=$QCOW_FILE,format=qcow2,if=virtio,encrypt.format=luks,encrypt.key-secret=$QCOW_SECRET_NAME" \
-    -object "secret,id=distracting_secret,data=$(random_string 1 8192)" \
-    -object "secret,id=some_other_secret,data=$(random_string 1 8192)"
+    
+    #-object "secret,id=distracting_secret,data=$(random_string 1 8192)" \
+    #-object "secret,id=some_other_secret,data=$(random_string 1 8192)"
     # these last secrets are just for fun, distraction and to try to make the secret be located at unpredictable
     # offsets in the heap relative to the root object because where would be the fun otherwise?
 

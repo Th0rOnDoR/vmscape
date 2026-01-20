@@ -31,6 +31,7 @@ if ! [ -f "$KERNEL_FILE" ]; then
 fi
 
 # build the initramfs
+#error if no cpio available not checked
 if ! [ -f "$INITRD_MANUAL_FILE" ]; then
     echo "# Create manual initramfs"
     bash "$INITRD_SCRIPT" --share --cwd "/mnt/" --out "$INITRD_MANUAL_FILE" --force

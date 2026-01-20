@@ -44,7 +44,8 @@ if ! [ -d "$CONTAINER_DIR" ]; then
         login \
         adduser \
         libpam-modules \
-        file
+        file \
+        cpio
         #tzdata \
 
 

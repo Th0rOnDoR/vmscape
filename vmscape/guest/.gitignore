@@ -4,5 +4,6 @@ enc.qcow2
 initramfs
 initramfs-base.cpio.gz
 initramfs-eval.cpio.gz
+initramfs.cpio.gz
 linux
 secret.txt
